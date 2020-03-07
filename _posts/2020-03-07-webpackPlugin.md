@@ -6,16 +6,21 @@ description: 平时有用到很多的webpack插件，比如html等；通过写we
 keywords: webpack 前端 webpackPlugin Node
 ---
 
+<h3>平时有用到很多的webpack插件，比如html等；通过写webpack插件，对了解webpack的原理应该也有一定的了解；</h3>
 
 ## 写插件的步骤
 
 - 初始化package.json文件，使用npm init
 
-- 安装webpack（yarn add webpack webpack-cli -D)
+- 安装webpack
+    
+    ```javascript
+        yarn add webpack webpack-cli -D
+    ```
 
 - 用webpack构建项目
 
-    目的
+    **目的**
     
     - 使用plugin    
     - 构建插件
@@ -35,4 +40,4 @@ keywords: webpack 前端 webpackPlugin Node
 
 ## 参考
 
-    [webpack官网，如何写一个webpack插件](https://www.webpackjs.com/contribute/writing-a-plugin/)
+[webpack官网，如何写一个webpack插件](https://www.webpackjs.com/contribute/writing-a-plugin/)
