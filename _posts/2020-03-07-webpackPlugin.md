@@ -44,6 +44,16 @@ keywords: webpack 前端 webpackPlugin Node
 
     compiler.hooks.compilation.tap
 
+    tap、tapAsync、tapPromise的区别？
+
+    Some plugin hooks are asynchronous. To tap into them, we can use tap method which will behave in synchronous manner or use one of tapAsync method or tapPromise method which are asynchronous methods.
+
+    tapAsync
+    When we use tapAsync method to tap into plugins, we need to call the callback function which is supplied as the last argument to our function
+    
+    tapPromise
+    When we use tapPromise method to tap into plugins, we need to return a promise which resolves when our asynchronous task is completed
+
 
     - copy-webpack-plugin
 
