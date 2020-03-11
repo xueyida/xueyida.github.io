@@ -54,6 +54,7 @@ keywords: webpack 前端 webpackPlugin Node
     tapPromise
     When we use tapPromise method to tap into plugins, we need to return a promise which resolves when our asynchronous task is completed
 
+    Tapable liberary
 
     - copy-webpack-plugin
 
@@ -146,3 +147,7 @@ Tapable类
 [webpack官网，如何写一个webpack插件](https://www.webpackjs.com/contribute/writing-a-plugin/)
 
 [事件钩子的参考](https://www.webpackjs.com/api/compiler-hooks/)
+
+[webpack源码解析](https://juejin.im/post/5c0206626fb9a049bc4c6540)
+
+[tabable解析](https://juejin.im/post/5be90b84e51d457c1c4df852)
