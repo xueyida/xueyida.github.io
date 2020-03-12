@@ -38,37 +38,15 @@ keywords: webpack 前端 webpackPlugin Node
             template: path.join(process.cwd(), './index.html') // 模班文件
         })
     ```
-    用到了```javascript compiler.hooks ```，好像是webpack4的写法，之前使用的写法是```javascript compiler.plugin```,使用了make、emit的事件钩子；complier.hooks.emit.tapAsync();
-
+    使用了make、emit的事件钩子
     compiler.hooks.make.tapAsync
 
     compiler.hooks.compilation.tap
 
-    tap、tapAsync、tapPromise的区别？
-
-    Some plugin hooks are asynchronous. To tap into them, we can use tap method which will behave in synchronous manner or use one of tapAsync method or tapPromise method which are asynchronous methods.
-
-    tapAsync
-    When we use tapAsync method to tap into plugins, we need to call the callback function which is supplied as the last argument to our function
-    
-    tapPromise
-    When we use tapPromise method to tap into plugins, we need to return a promise which resolves when our asynchronous task is completed
-
-    Tapable liberary
+   
 
     - copy-webpack-plugin
-
-    > 拷贝资源插件
-
-    ```javascript
-        new CopyWebpackPlugin([
-            {
-                from: path.join(process.cwd(), './vendor/'),
-                to: path.join(process.cwd(), './dist/'),
-                ignore: ['*.json']
-            }
-        ])
-    ```
+   
 
 - 开始写插件
 
@@ -78,9 +56,16 @@ keywords: webpack 前端 webpackPlugin Node
 
     compiler
 
+    > 控制编译的流程
+
     compilation
 
+    > 控制解析的流程
+
     Tapable
+
+    > 生产各种钩子
+
 
 
     例子：
@@ -88,20 +73,29 @@ keywords: webpack 前端 webpackPlugin Node
     > 函数写法
 
     ```javascript
-        // 一个 JavaScript 命名函数。
+
         function MyExampleWebpackPlugin() {
 
         };
 
-        // 在插件函数的 prototype 上定义一个 `apply` 方法。
         MyExampleWebpackPlugin.prototype.apply = function(compiler{
-            // 指定一个挂载到 webpack 自身的事件钩子。
-            compiler.plugin('webpacksEventHook', function(compilation /* 处理 webpack 内部实例的特定数据。*/, callback) {
+            
+            // plugin写法
+            
+            compiler.plugin('webpacksEventHook', function(compilation , callback) {
                 console.log("This is an example plugin!!!");
-
-                // 功能完成后调用 webpack 提供的回调。
                 callback();
             });
+
+
+             // hooks写法
+
+             // webpacksEventHook:emit、complier等
+             // TabType: Tab/tabAsync/tabPromise
+             complier.hooks.webpacksEventHook.TabType((complication, [callback]) => {
+                console.log("This is an example plugin!!!");
+                callback();
+             })
         };
     ```
 
@@ -110,13 +104,22 @@ keywords: webpack 前端 webpackPlugin Node
     ```javascript
         class MyExampleWebpackPluginClassType{
             apply(compiler){
-                 // 指定一个挂载到 webpack 自身的事件钩子。
-                compiler.plugin('webpacksEventHook', function(compilation /* 处理 webpack 内部实例的特定数据。*/, callback) {
-                    console.log("This is an example plugin!!!");
 
-                    // 功能完成后调用 webpack 提供的回调。
+                // plugin写法
+
+                compiler.plugin('webpacksEventHook', function(compilation, callback) {
+                    console.log("This is an example plugin!!!");
                     callback();
                 });
+
+
+                // hooks写法
+
+                // webpacksEventHook:emit、complier等
+                // TabType: Tab/tabAsync/tabPromise
+                complier.hooks.webpacksEventHook.TabType((complication, [callback]) => {
+
+                })
             }
         }
     ```
@@ -136,11 +139,24 @@ keywords: webpack 前端 webpackPlugin Node
 
 - 停止服务与开启服务
 - 监听文件内容的变化
+- 修改一个文件，另一个文件的内容也会变化
 
 tab、tabAsync、tabPromise的区别
 
-Tapable类
 
+> Some plugin hooks are asynchronous. To tap into them, we can use tap method which will behave in synchronous manner or use one of tapAsync method or tapPromise method which are asynchronous methods.
+
+> tapAsync
+When we use tapAsync method to tap into plugins, we need to call the callback function which is supplied as the last argument to our function
+
+> tapPromise
+When we use tapPromise method to tap into plugins, we need to return a promise which resolves when our asynchronous task is completed
+
+
+
+## 阅读文档中的问题
+
+> 不同类型的钩子、不同类型的tap事件之间是如何配合的？
 
 ## 参考
 
