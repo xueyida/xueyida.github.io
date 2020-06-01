@@ -14,14 +14,12 @@ keywords: 前端  Javascript
 - 基本数据类型
 
   1. 数值
-    - BigInt
-
   2. 字符串
   3. 布尔
   4. undefined
   5. null
   6. symbol
-
+  7. BigInt
 
 - 引用数据类型
 
@@ -38,7 +36,6 @@ keywords: 前端  Javascript
     - null (typeof null === `object`)
 
   - 函数属性
-
   - 基本对象
   - 数字和日期对象
   - 字符串
@@ -70,4 +67,5 @@ keywords: 前端  Javascript
 ### 参考
 
 [标准内置对象](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects)
+
 [JavaScript 数据类型和数据结构](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Data_structures)
