@@ -13,17 +13,19 @@ keywords: 前端  Javascript
 
 - 基本数据类型
 
-  1. 数值
-  2. 字符串
-  3. 布尔
-  4. undefined
-  5. null
-  6. symbol
+  1. Number
+  2. String
+  3. Boolean
+  4. Undefined
+  5. Null
+  6. Symbol
   7. BigInt
 
 - 引用数据类型
 
-  引用类型的分类： 
+
+
+  内置对象的分类： 
 
   各种类型之间的区别是什么？
   本地对象与内置对象的区别？本地对象是内置对象的子集
@@ -36,6 +38,8 @@ keywords: 前端  Javascript
     - null (typeof null === `object`)
 
   - 函数属性
+
+
   - 基本对象
   - 数字和日期对象
   - 字符串
@@ -49,17 +53,6 @@ keywords: 前端  Javascript
   - 其他
     arguments  
 
-- 常用引用类型
-
-  - Object
-  - Function
-  - Array
-  - 基本数据类型的包装(String、Boolean、)
-  - RegExp
-  - Date
-  - Error
-  - Map
-  - Set
 
 ### 类型转换
 
