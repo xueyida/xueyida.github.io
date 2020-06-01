@@ -35,10 +35,10 @@ keywords: 前端  Javascript
     - Infinity (typeof Infinity === `number`)
     - NaN (typeof NaN === `number`)
     - undefined (typeof undefined === `undefined`)
-    - null (typeof null === `null`)
+    - null (typeof null === `object`)
 
   - 函数属性
-    
+
   - 基本对象
   - 数字和日期对象
   - 字符串
