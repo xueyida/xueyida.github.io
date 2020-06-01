@@ -27,10 +27,18 @@ keywords: 前端  Javascript
 
   引用类型的分类： 
 
-  各种类型直接的区别室什么？
+  各种类型之间的区别是什么？
+  本地对象与内置对象的区别？本地对象是内置对象的子集
+  宿主对象就是web api?
 
   - 值属性
+    - Infinity (typeof Infinity === `number`)
+    - NaN (typeof NaN === `number`)
+    - undefined (typeof undefined === `undefined`)
+    - null (typeof null === `null`)
+
   - 函数属性
+    
   - 基本对象
   - 数字和日期对象
   - 字符串
@@ -62,3 +70,4 @@ keywords: 前端  Javascript
 ### 参考
 
 [标准内置对象](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects)
+[JavaScript 数据类型和数据结构](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Data_structures)
