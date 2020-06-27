@@ -8,6 +8,12 @@ keywords: 前端  Javascript
 
 <h1 align="center" >数据类型转换</h1>
 
+运算符与函数会将赋给他们的值，转换为正确的类型；比如
+
+1. `alert`会将任何值转换为字符串
+
+2. 算术运算符会将值转换为数字
+
 
 ### 数据类型
 
@@ -34,31 +40,6 @@ keywords: 前端  Javascript
   3. 可以为所有变量赋`undefined`,但不建议；
   4. `undefined`用于检验变量是否被赋值
   
-### 内置对象的分类
-
-  - 值属性
-    - Infinity (`typeof Infinity` === `number`)
-    - NaN (`typeof NaN` === `number`)
-    - undefined ( `typeof undefined` === `undefined`)
-    - null (`typeof null` === `object`)
-    - globalThis 
-      提供了标准的方式来获取不同环境下的全局`this`对象
-
-  - 函数属性
-  - 基本对象
-  - 数字和日期对象
-  - 字符串
-  - 可索引的集合对象
-  - 使用键的集合对象
-  - 结构化数据
-  - 控制抽象对象
-  - 反射
-  - 国际化
-  - WebAssembly
-  - 其他
-    arguments  
-
-  
 
 
 ### 类型转换（垃圾转换）
@@ -67,9 +48,7 @@ keywords: 前端  Javascript
 
     - 方法
 
-      1. `Number()`
-      2. `parseInt()`
-      3. `parseFloat()`
+      这里说的是`隐式转换`以及`Number()`
 
     - 规则
       
@@ -97,8 +76,9 @@ keywords: 前端  Javascript
     - 方法
 
       1. `String()`
-      2. `value.toString()`
-      3. `""+value`
+      
+      2. `""+value....`等其他的隐式转换，比如alert
+
 
     - 规则
 
@@ -130,12 +110,112 @@ keywords: 前端  Javascript
       false: 
         `0`, `-0`, `NaN`（数字类型）, 
         `0n`, `-0n`（BigInt类型）,
-        `空字符串`(字符串类型), 
+        `空字符串`(字符串类型,剩余的字符串都会转为true,比如`'false'`), 
         `false`（布尔类型）, 
         `undefined`, 
         `null`;
 
       true: 剩余的数据类型，包括Symbol;
+
+  - 转BigInt
+
+    - 方法
+
+      `BigInt()`
+    
+    - 规则
+
+      - 数值： `1` -> `1n`
+
+      - 字符串：  符合规则的正常转换 `'11'` -> `11n`;
+
+      - Boolean: `true`->`1n`, `false` -> `0n`
+
+      - undefined: `error`
+
+      - null: `error`
+
+      - Symbol: `error`
+          
+
+### 对象的类型转换
+
+  > 规则：
+
+  1. 第一步，obj[Symbol.toPrimitive](hint)
+
+      hint的值：
+
+      1. string
+      2. number
+      3. default（少数运算符比如`+`, `==`不是`===`）
+
+        当运算符不确定转换为哪种类型时，走default;
+
+      ```javascript
+
+        let user = {
+          name: "John",
+          money: 1000,
+
+          [Symbol.toPrimitive](hint) {
+            alert(`hint: ${hint}`);
+            return hint == "string" ? `{name: "${this.name}"}` : this.money;
+          }
+        };
+
+        // 转换演示：
+        alert(user); // hint: string -> {name: "John"}
+        alert(+user); // hint: number -> 1000
+        alert(user + 500); // hint: default -> 1500
+      
+      ```
+
+  2. 如果没有`Symbol.toPrimitive`方法，如果hint为`string`(转换为`string`) 
+      
+      先obj.toString()、后obj.valueOf();
+      先在obj上查找toString、valueOf;再去查找`Object.prototype.toString`, `Object.prototype.valueOf`,下面也是一样的
+
+  3. 如果没有`Symbol.toPrimitive`方法，如果hint为`number`或者`default`(除了Date) 
+  
+      先obj.valueOf()，再obj.toString();
+  
+  4. 上面是主要的顺序规则，4、5是另外一些转换规则
+      
+    valueOf、toString返回一个对象，不会报错，会被忽略（就像这种值不存在）；
+
+  5. Symbol.toPrimitive返回对象会报错，只能返回一个`原始值`;
+
+  > 默认转换使用的是Object上的方法：
+    
+  使用`Object.valueOf`与`Object.toString`，所有对象都会用到Object上的这两个方法；
+      
+  因为valueOf会返回对象，所以转换的时候一般都是使用的`toString()`,Object.toString()进行兜底-_-!!;
+
+  可以自定义`valueOf`与`toString`进行截取;
+
+  Object.toString: `'[object object]'`;
+
+  Object.valueOf: 指向对象本身
+
+
+  ```javascript
+
+      let user = {name: "John"};
+
+      alert(user); // [object Object]
+
+      alert(user.valueOf() === user); // true
+  
+  ```
+
+
+  > 实际使用
+
+  给对象添加`obj.toString()`给所有的转换,这个方法会截断访问Object上的方法
+
+
+
       
 ### 类型判断
 
@@ -162,16 +242,18 @@ keywords: 前端  Javascript
 
 1. 各种引用数据类型之间的区别是什么？
 
-    Object是所有引用数据类型的父元素；试着用instance判断其他的引用类型，比如Json等；
+    Object是所有引用数据类型的父元素；试着用instance判断其他的引用类型，比如JSON等；
 
 2. 常用的引用类型?
     对象、数组、函数；
 
 3. 本地对象、内置对象、宿主对象分别是什么？
 
-  宿主对象：BOM对象与DOM对象
-  内置对象：内置对象属于本地对象，目前规定的内置对象有Math、Global;
-  本地对象：除了宿主对象的所有对象；
+    宿主对象：BOM对象与DOM对象
+    内置对象：内置对象属于本地对象，目前规定的内置对象有Math、Global、Date;
+    本地对象：除了宿主对象的所有对象；
+
+4. 隐式转换的规则是什么？
 
 ### 参考
 
